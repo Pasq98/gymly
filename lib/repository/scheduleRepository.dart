@@ -96,8 +96,8 @@ class ScheduleRepository {
     logger.d(
         'SELECT * FROM Reps WHERE idScheda=${excercise.idSchedule} and idDay=${excercise.idDay} and idWeek=${excercise.idWeek} and idExcercise=${excercise.id}');
     final List<Map<String, Object?>> queryResult = await database.rawQuery(
-        'SELECT * FROM Reps WHERE idScheda=? and idDay=? and idWeek=? and idExcercise=?',
-        [excercise.idSchedule, excercise.idDay, excercise.idWeek, excercise.id]);
+        'SELECT * FROM Reps WHERE idScheda=? and idExcercise= ?and idDay=? and idWeek=? and idExcercise=?',
+        [excercise.idSchedule, excercise.id, excercise.idDay, excercise.idWeek, excercise.id]);
     // queryResult.forEach((row) => logger.d(row));
     return queryResult.map((e) => RepModel.fromMap(e)).toList();
   }

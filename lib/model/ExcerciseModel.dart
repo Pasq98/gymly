@@ -1,3 +1,5 @@
+import 'package:gymly/model/RepModel.dart';
+
 class ExcerciseModel {
   int? id;
   final int idSchedule;
@@ -6,9 +8,11 @@ class ExcerciseModel {
   final String nome;
   final String setsAndRep;
   final int recovery;
+  //List<RepModel>? reps;
 
   ExcerciseModel(
       {this.id,
+      // this.reps,
       required this.idSchedule,
       required this.idDay,
       required this.idWeek,

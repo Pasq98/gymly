@@ -6,6 +6,7 @@ import 'package:gymly/bloc/reps/cubit.dart';
 import 'package:gymly/bloc/reps/state.dart';
 import 'package:gymly/colors.dart';
 import 'package:gymly/model/ExcerciseModel.dart';
+import 'package:gymly/model/RepModel.dart';
 import 'package:gymly/pages/ViewExcercise/titleExcercise.dart';
 import 'package:logger/logger.dart';
 
@@ -44,7 +45,9 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
       if (state.repStatus == RepEnumState.retrieved) {
         //print(widget.excercise);
         logger.d(state.listRep);
-        //var currentList = state.listRep.where((element) => widget.excercise.)
+        logger.d('Widget exer id: ${widget.excercise.id}');
+        List<RepModel> currentRepModel = state.listRep.where((element) => widget.excercise.id == element.idExcercise).toList();
+        logger.d(currentRepModel);
 
         print(state.repStatus);
         return Column(
@@ -128,9 +131,10 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                     filled: true,
-                                    hintText: state.repStatus == RepEnumState.retrieved
-                                        ? state.listRep[currentSet].peso.toString()
-                                        : '',
+                                    hintText: '',
+                                    //state.repStatus == RepEnumState.retrieved
+                                    //     ? currentRepModel[currentSet].peso.toString()
+                                    //  : '',
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Colors.orange,
