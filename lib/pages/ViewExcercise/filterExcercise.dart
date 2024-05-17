@@ -4,7 +4,6 @@ import 'package:gymly/bloc/create_label_filter/cubit.dart';
 import 'package:gymly/bloc/create_label_filter/state.dart';
 import 'package:gymly/bloc/excercise/cubit.dart';
 import 'package:gymly/bloc/filter_excercise/cubit.dart';
-import 'package:gymly/bloc/reps/cubit.dart';
 import 'package:gymly/colors.dart';
 import 'package:gymly/model/ExcerciseModel.dart';
 import 'package:gymly/model/WorkoutScheduleModel.dart';
@@ -31,6 +30,7 @@ class _FilterExcerciseState extends State<FilterExcercise> {
   }
 
   Widget dropDownWeek(List<String> _nWeeksLabel) {
+    _selectedWeek = context.read<FilterExcerciseCubit>().state.selectedWeek;
     return DropdownButton(
       focusColor: CustomColor.orangePrimary,
       underline: Container(
@@ -49,21 +49,14 @@ class _FilterExcerciseState extends State<FilterExcercise> {
 
           context.read<FilterExcerciseCubit>().changeFilter(week: _selectedWeek);
           //TODO collegare cubit in maniera automatica, poco corretto sto accrocchio
-          context.read<ExcerciseCubit>().getExcercises(
-                context.read<FilterExcerciseCubit>().state.id_schedule,
-                context.read<FilterExcerciseCubit>().state.selectedWeek,
-                context.read<FilterExcerciseCubit>().state.selectedDays,
-              );
-
-          context.read<SetsAndRepCubit>().getRep(
-                ExcerciseModel(
-                    idDay: context.read<FilterExcerciseCubit>().state.selectedDays,
-                    idSchedule: widget.currentSchedule.id!,
-                    idWeek: context.read<FilterExcerciseCubit>().state.selectedWeek,
-                    nome: '',
-                    recovery: 0,
-                    setsAndRep: ''),
-              );
+          context.read<ExcerciseCubit>().getExcercises(ExcerciseModel(
+                idSchedule: context.read<FilterExcerciseCubit>().state.id_schedule,
+                idDay: context.read<FilterExcerciseCubit>().state.selectedDays,
+                idWeek: context.read<FilterExcerciseCubit>().state.selectedWeek,
+                setsAndRep: '',
+                recovery: 0,
+                nome: '',
+              ));
         });
       },
       items: _nWeeksLabel.map((String val) {
@@ -81,6 +74,7 @@ class _FilterExcerciseState extends State<FilterExcercise> {
   }
 
   Widget dropDownDay(List<String> _nOfDaysLabels) {
+    _selectedDay = context.read<FilterExcerciseCubit>().state.selectedDays;
     return DropdownButton(
       value: _selectedDay,
       underline: Container(
@@ -93,28 +87,21 @@ class _FilterExcerciseState extends State<FilterExcercise> {
             style: TextStyle(color: CustomColor.orangePrimary, fontSize: 16, fontWeight: FontWeight.w500)),
       ),
       onChanged: (value) async {
-        //  setState(() {
-        _selectedDay = value!;
-        print("SelctedDay $_selectedDay");
-        context.read<FilterExcerciseCubit>().changeFilter(day: _selectedDay);
-        //TODO collegare cubit in maniera automatica, poco corretto sto accrocchio
+        setState(() {
+          _selectedDay = value!;
+          print("SelctedDay $_selectedDay");
+          context.read<FilterExcerciseCubit>().changeFilter(day: _selectedDay);
+          //TODO collegare cubit in maniera automatica, poco corretto sto accrocchio
 
-        await context.read<ExcerciseCubit>().getExcercises(
-              context.read<FilterExcerciseCubit>().state.id_schedule,
-              context.read<FilterExcerciseCubit>().state.selectedWeek,
-              context.read<FilterExcerciseCubit>().state.selectedDays,
-            );
-
-        await context.read<SetsAndRepCubit>().getRep(
-              ExcerciseModel(
-                  idDay: context.read<FilterExcerciseCubit>().state.selectedDays,
-                  idSchedule: widget.currentSchedule.id!,
-                  idWeek: context.read<FilterExcerciseCubit>().state.selectedWeek,
-                  nome: '',
-                  recovery: 0,
-                  setsAndRep: ''),
-            );
-        //});
+          context.read<ExcerciseCubit>().getExcercises(ExcerciseModel(
+                idSchedule: context.read<FilterExcerciseCubit>().state.id_schedule,
+                idDay: context.read<FilterExcerciseCubit>().state.selectedDays,
+                idWeek: context.read<FilterExcerciseCubit>().state.selectedWeek,
+                setsAndRep: '',
+                recovery: 0,
+                nome: '',
+              ));
+        });
       },
       items: _nOfDaysLabels.map((String val) {
         return DropdownMenuItem(

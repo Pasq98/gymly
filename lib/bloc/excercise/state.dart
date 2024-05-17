@@ -12,6 +12,8 @@ enum ExcerciseEnumState {
   failedInsert,
   retrieving,
   retrieved,
+  updatingPeso,
+
   failderRetrieving,
 }
 
@@ -36,12 +38,12 @@ final class ExcerciseState extends Equatable {
   String toString() => 'WorkoutScheduleState(workoutScheduleStatus: $excerciseStatus, error: $error)';
 
   ExcerciseState copyWith({
-    ExcerciseEnumState? workoutScheduleStatus,
+    ExcerciseEnumState? excerciseStatus,
     List<ExcerciseModel>? listExcercise,
     CustomError? error,
   }) {
     return ExcerciseState(
-        excerciseStatus: workoutScheduleStatus ?? this.excerciseStatus,
+        excerciseStatus: excerciseStatus ?? this.excerciseStatus,
         error: error ?? this.error,
         listExcercise: listExcercise ?? this.listExcercise);
   }

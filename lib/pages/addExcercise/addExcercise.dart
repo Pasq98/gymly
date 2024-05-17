@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gymly/bloc/excercise/cubit.dart';
 import 'package:gymly/bloc/filter_excercise/cubit.dart';
-import 'package:gymly/bloc/reps/cubit.dart';
 import 'package:gymly/bloc/workout_scheduleCRUD/cubit.dart';
 import 'package:gymly/colors.dart';
 import 'package:gymly/model/ExcerciseModel.dart';
@@ -41,16 +40,7 @@ class _AddExcerciseState extends State<AddExcercise> {
       recovery: int.parse(_recovery!),
       nome: _nameExcercise!,
     );
-
-    await context.read<ExcerciseCubit>().addExcercise(newExcercise);
-
-    /* await context.read<ExcerciseCubit>().getExcercises(
-          context.read<FilterExcerciseCubit>().state.id_schedule,
-          context.read<FilterExcerciseCubit>().state.selectedWeek,
-          context.read<FilterExcerciseCubit>().state.selectedDays,
-        );
-
-    await context.read<SetsAndRepCubit>().getRep(newExcercise);*/
+    context.read<ExcerciseCubit>().addExcercise(newExcercise);
     Navigator.of(context).pop();
   }
 

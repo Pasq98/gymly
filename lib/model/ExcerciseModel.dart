@@ -8,11 +8,11 @@ class ExcerciseModel {
   final String nome;
   final String setsAndRep;
   final int recovery;
-  //List<RepModel>? reps;
+  List<RepModel>? reps;
 
   ExcerciseModel(
       {this.id,
-      // this.reps,
+      this.reps,
       required this.idSchedule,
       required this.idDay,
       required this.idWeek,
@@ -43,6 +43,7 @@ class ExcerciseModel {
 
   @override
   String toString() {
-    return "id : $id, idSchedule : $idSchedule, idDay : $idDay,  idWeek : $idWeek, setsAndRep: $setsAndRep, recovery : $recovery,nome : $nome";
+    return "id : $id, idSchedule : $idSchedule, idDay : $idDay,  idWeek : $idWeek, setsAndRep: $setsAndRep, recovery : $recovery, nome : $nome\n"
+        "rep: $reps";
   }
 }

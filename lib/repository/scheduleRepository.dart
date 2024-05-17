@@ -42,16 +42,15 @@ class ScheduleRepository {
       final id_excercise = await database.insert('Excercise', excercise.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
       int nOfSet = int.parse(excercise.setsAndRep.substring(0, 1));
       for (int currentSet = 0; currentSet < nOfSet; currentSet++) {
-        //TODO controllare che id sia effettivamente l'id dell'esercizio creato
         final int idSet =
             await database.rawInsert('INSERT INTO Sets(idExcercise,setNumber) values (?,?)', [id_excercise, currentSet + 1]);
 
         logger.d(
-          'INSERT INTO Reps(idSet,idExcercise,idScheda,idDay,idWeek,peso,rep,ced) values ($idSet,$id_excercise,${excercise.idSchedule},${excercise.idDay},${excercise.idWeek},0,0,0)',
+          'INSERT INTO Reps(idSet,idExcercise,idScheda,idDay,idWeek,peso,rep,ced) values (${currentSet + 1},$id_excercise,${excercise.idSchedule},${excercise.idDay},${excercise.idWeek},0,0,0)',
         );
         final int idRep = await database.rawInsert(
             'INSERT INTO Reps(idSet,idExcercise,idScheda,idDay,idWeek,peso,rep,ced) values (?,?,?,?,?,?,?,?)',
-            [idSet, id_excercise, excercise.idSchedule, excercise.idDay, excercise.idWeek, 0, 0, 0]);
+            [currentSet + 1, id_excercise, excercise.idSchedule, excercise.idDay, excercise.idWeek, 0, 0, 0]);
       }
     } catch (e) {
       throw CustomError(
@@ -62,12 +61,29 @@ class ScheduleRepository {
     }
   }
 
-  Future<List<ExcerciseModel>> getExcercise(int idScheda, String week, String day) async {
-    // print('SELECT * FROM Excercise WHERE idSchedule=$idScheda and idDay=$day and idWeek=$week');
-    final List<Map<String, Object?>> queryResult =
-        await database.rawQuery('SELECT * FROM Excercise WHERE idSchedule=? and idDay=? and idWeek=?', [idScheda, day, week]);
-    queryResult.forEach((row) => print(row));
-    return queryResult.map((e) => ExcerciseModel.fromMap(e)).toList();
+  Future<List<ExcerciseModel>> getExcercise(ExcerciseModel excercise) async {
+    List<Map<String, Object?>> queryResultListOfRep;
+
+    final List<Map<String, Object?>> queryResultExcerciseList = await database.rawQuery(
+        'SELECT * FROM Excercise WHERE idSchedule=? and idDay=? and idWeek=?',
+        [excercise.idSchedule, excercise.idDay, excercise.idWeek]);
+
+    //GET REPS
+    List<ExcerciseModel> listOfExcercise = queryResultExcerciseList.map((e) => ExcerciseModel.fromMap(e)).toList();
+    for (int i = 0; i < listOfExcercise.length; i++) {
+      queryResultListOfRep =
+          await database.rawQuery('SELECT * FROM Reps WHERE idScheda=? and idExcercise= ? and idDay=? and idWeek=?', [
+        listOfExcercise[i].idSchedule,
+        listOfExcercise[i].id,
+        listOfExcercise[i].idDay,
+        listOfExcercise[i].idWeek,
+      ]);
+
+      queryResultListOfRep.map((e) => logger.d(e));
+      List<RepModel> listOfRep = queryResultListOfRep.map((e) => RepModel.fromMap(e)).toList();
+      listOfExcercise[i].reps = listOfRep;
+    }
+    return listOfExcercise;
   }
 
   Future<int> getNumberOfDays(int id_scheda) async {
@@ -83,6 +99,23 @@ class ScheduleRepository {
       final id = await database.rawUpdate(
           'UPDATE Reps SET peso = ? WHERE idSet=? and idScheda=? and idDay=? and idWeek=? and idExcercise=?',
           [peso, nSet, excercise.idSchedule, excercise.idDay, excercise.idWeek, excercise.id]);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception insert Excercise',
+        message: e.toString(),
+        plugin: 'sql_error',
+      );
+    }
+  }
+
+  Future<void> switchCed(int idSet, ExcerciseModel excercise) async {
+    final cedValue = excercise.reps![idSet - 1].ced == 0 ? 1 : 0;
+    try {
+      print(
+          'UPDATE Reps SET ced = ${excercise.reps![idSet - 1].ced == 0 ? 1 : 0} WHERE idSet=$idSet and idDay=${excercise.idDay} and idWeek=${excercise.idWeek} and idExcercise=${excercise.id}');
+      final id = await database.rawUpdate(
+          'UPDATE Reps SET ced = ? WHERE idSet=? and idScheda=? and idDay=? and idWeek=? and idExcercise=?',
+          [cedValue, idSet, excercise.idSchedule, excercise.idDay, excercise.idWeek, excercise.id]);
     } catch (e) {
       throw CustomError(
         code: 'Exception insert Excercise',

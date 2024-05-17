@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gymly/bloc/create_label_filter/cubit.dart';
 import 'package:gymly/bloc/excercise/cubit.dart';
 import 'package:gymly/bloc/filter_excercise/cubit.dart';
-import 'package:gymly/bloc/reps/cubit.dart';
 import 'package:gymly/bloc/workout_scheduleCRUD/cubit.dart';
 import 'package:gymly/dabase/DBService.dart';
 import 'package:gymly/pages/SpashScreen.dart';
@@ -91,9 +90,6 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<ExcerciseCubit>(
           create: (context) => ExcerciseCubit(scheduleRepository: context.read<ScheduleRepository>()),
-        ),
-        BlocProvider<SetsAndRepCubit>(
-          create: (context) => SetsAndRepCubit(scheduleRepository: context.read<ScheduleRepository>()),
         ),
       ], child: MaterialApp(debugShowCheckedModeBanner: false, title: 'Easy Chat', home: const SplashScreen())),
     );
