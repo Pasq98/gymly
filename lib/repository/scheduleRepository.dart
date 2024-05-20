@@ -83,6 +83,7 @@ class ScheduleRepository {
       List<RepModel> listOfRep = queryResultListOfRep.map((e) => RepModel.fromMap(e)).toList();
       listOfExcercise[i].reps = listOfRep;
     }
+
     return listOfExcercise;
   }
 
@@ -99,6 +100,22 @@ class ScheduleRepository {
       final id = await database.rawUpdate(
           'UPDATE Reps SET peso = ? WHERE idSet=? and idScheda=? and idDay=? and idWeek=? and idExcercise=?',
           [peso, nSet, excercise.idSchedule, excercise.idDay, excercise.idWeek, excercise.id]);
+    } catch (e) {
+      throw CustomError(
+        code: 'Exception insert Excercise',
+        message: e.toString(),
+        plugin: 'sql_error',
+      );
+    }
+  }
+
+  Future<void> addRepToSet(int rep, int nSet, ExcerciseModel excercise) async {
+    try {
+      // print(
+      //   'UPDATE Reps SET peso = $peso WHERE idSet=$nSet and idDay=${excercise.idDay} and idWeek=${excercise.idWeek} and idExcercise=${excercise.id}');
+      final id = await database.rawUpdate(
+          'UPDATE Reps SET rep = ? WHERE idSet=? and idScheda=? and idDay=? and idWeek=? and idExcercise=?',
+          [rep, nSet, excercise.idSchedule, excercise.idDay, excercise.idWeek, excercise.id]);
     } catch (e) {
       throw CustomError(
         code: 'Exception insert Excercise',

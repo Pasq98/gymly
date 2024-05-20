@@ -81,7 +81,7 @@ class _ViewExcerciseState extends State<ViewExcercise> {
               ),
             );
           } else {
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       ),

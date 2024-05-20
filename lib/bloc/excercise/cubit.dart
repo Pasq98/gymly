@@ -13,7 +13,6 @@ class ExcerciseCubit extends Cubit<ExcerciseState> {
   Future<void> addExcercise(ExcerciseModel excercise) async {
     emit(state.copyWith(excerciseStatus: ExcerciseEnumState.inserting));
 
-    //INSERTING
     try {
       await scheduleRepository.addExcercise(excercise);
       emit(state.copyWith(excerciseStatus: ExcerciseEnumState.inserted));
@@ -27,9 +26,32 @@ class ExcerciseCubit extends Cubit<ExcerciseState> {
   Future<void> addPesoToRep(int peso, int nSet, ExcerciseModel excercise) async {
     emit(state.copyWith(excerciseStatus: ExcerciseEnumState.updatingPeso));
 
-    //UPDATING
     try {
       await scheduleRepository.addPesoToRep(peso, nSet, excercise);
+    } on CustomError catch (e) {
+      emit(state.copyWith(excerciseStatus: ExcerciseEnumState.failedInsert, error: e));
+    }
+
+    await getExcercises(excercise);
+  }
+
+  Future<void> addRepToSet(int rep, int nSet, ExcerciseModel excercise) async {
+    emit(state.copyWith(excerciseStatus: ExcerciseEnumState.updatingPeso));
+
+    try {
+      await scheduleRepository.addRepToSet(rep, nSet, excercise);
+    } on CustomError catch (e) {
+      emit(state.copyWith(excerciseStatus: ExcerciseEnumState.failedInsert, error: e));
+    }
+
+    await getExcercises(excercise);
+  }
+
+  Future<void> switchCed(int idSet, ExcerciseModel excercise) async {
+    emit(state.copyWith(excerciseStatus: ExcerciseEnumState.updatingPeso));
+
+    try {
+      await scheduleRepository.switchCed(idSet, excercise);
     } on CustomError catch (e) {
       emit(state.copyWith(excerciseStatus: ExcerciseEnumState.failedInsert, error: e));
     }
@@ -42,18 +64,5 @@ class ExcerciseCubit extends Cubit<ExcerciseState> {
 
     final List<ExcerciseModel> list = await scheduleRepository.getExcercise(excercise);
     emit(state.copyWith(excerciseStatus: ExcerciseEnumState.retrieved, listExcercise: list));
-  }
-
-  Future<void> switchCed(int idSet, ExcerciseModel excercise) async {
-    emit(state.copyWith(excerciseStatus: ExcerciseEnumState.updatingPeso));
-
-    //UPDATING
-    try {
-      await scheduleRepository.switchCed(idSet, excercise);
-    } on CustomError catch (e) {
-      emit(state.copyWith(excerciseStatus: ExcerciseEnumState.failedInsert, error: e));
-    }
-
-    await getExcercises(excercise);
   }
 }

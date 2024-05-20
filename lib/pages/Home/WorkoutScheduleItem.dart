@@ -78,19 +78,19 @@ class WorkoutScheduleItem extends StatelessWidget {
                 margin: EdgeInsets.only(right: 14),
                 child: Column(
                   children: [
-                    Text(
-                      'Inizio',
+                    const Text(
+                      'Start date',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                     Text(
                       workoutSchedule.dataInizio,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.orange),
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.orange),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    Text(
-                      'Fine',
+                    const Text(
+                      'End Date',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     ),
                     Text(

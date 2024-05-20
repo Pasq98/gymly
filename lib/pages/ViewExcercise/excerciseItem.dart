@@ -106,11 +106,14 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
                                   filled: true,
                                   hintText: widget.excercise.reps![currentSet].rep.toString(),
                                   focusedBorder: const OutlineInputBorder(
-                                    borderSide: const BorderSide(
+                                    borderSide: BorderSide(
                                       color: Colors.orange,
                                     ),
                                   ),
                                 ),
+                                onSubmitted: (rep) {
+                                  context.read<ExcerciseCubit>().addRepToSet(int.parse(rep), currentSet + 1, widget.excercise);
+                                },
                               )),
                           Container(
                             margin: const EdgeInsets.only(left: 0, right: 28),
@@ -137,9 +140,7 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
                             margin: EdgeInsets.only(left: 0, right: 0),
                             height: 30,
                             child: Switch(
-                              //TODO: aggiustare colore
                               activeColor: Color.fromRGBO(255, 217, 125, 1),
-                              //                              activeColor: Colors.yellow.withOpacity(0.2),
                               splashRadius: 50.0,
                               value: widget.excercise.reps![currentSet].ced == 1 ? true : false,
                               onChanged: (value) {

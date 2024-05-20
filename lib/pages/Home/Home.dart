@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   const Text(
-                    'Le mie schede',
+                    'My workout',
                     style: TextStyle(color: CustomColor.fontBlack, fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(
