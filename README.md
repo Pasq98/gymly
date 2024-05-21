@@ -1,16 +1,23 @@
-# gymly
+# GYMLY
 
-Track your progress
+Track your progress.
+
+# WORK IN PROGRESS APP
+
+This app it's still work in progress, will be available in store as soon as possible :)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+App created with Flutter and BLOC as state management.
 
-A few resources to get you started if this is your first Flutter project:
+The core of this app is to track small improvements, for efficient measurement of your progress in gym.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+You can save for each sets the exact number of rep and weight, and immediately check to see if you've made any progress since the last week.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+![1](https://github.com/Pasq98/gymly/assets/48348216/c705e370-d389-42be-b201-e8344878f12a)
+
+![2](https://github.com/Pasq98/gymly/assets/48348216/2d975772-0f41-4ad4-b629-2642ca95054b)
+
+![3](https://github.com/Pasq98/gymly/assets/48348216/012a338e-3ed9-470e-b968-cdf4f10c3b9c)
