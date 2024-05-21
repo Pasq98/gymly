@@ -1,6 +1,10 @@
 # GYMLY
 
-Track your progress
+Track your progress.
+
+#WORK IN PROGRESS APP
+
+This app it's still work in progress, will be available in store as soon as possible :)
 
 ## Getting Started
 
