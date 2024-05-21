@@ -24,7 +24,6 @@ class _FilterExcerciseState extends State<FilterExcercise> {
 
   @override
   void initState() {
-    //TODO: context da dove lo prende???
     context.read<CreateLabelFilterCubit>().createLabels(widget.currentSchedule);
     super.initState();
   }
@@ -48,7 +47,6 @@ class _FilterExcerciseState extends State<FilterExcercise> {
           _selectedWeek = value!;
 
           context.read<FilterExcerciseCubit>().changeFilter(week: _selectedWeek);
-          //TODO collegare cubit in maniera automatica, poco corretto sto accrocchio
           context.read<ExcerciseCubit>().getExcercises(ExcerciseModel(
                 idSchedule: context.read<FilterExcerciseCubit>().state.id_schedule,
                 idDay: context.read<FilterExcerciseCubit>().state.selectedDays,
@@ -91,7 +89,6 @@ class _FilterExcerciseState extends State<FilterExcercise> {
           _selectedDay = value!;
           print("SelctedDay $_selectedDay");
           context.read<FilterExcerciseCubit>().changeFilter(day: _selectedDay);
-          //TODO collegare cubit in maniera automatica, poco corretto sto accrocchio
 
           context.read<ExcerciseCubit>().getExcercises(ExcerciseModel(
                 idSchedule: context.read<FilterExcerciseCubit>().state.id_schedule,

@@ -105,6 +105,9 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
                                 decoration: InputDecoration(
                                   filled: true,
                                   hintText: widget.excercise.reps![currentSet].rep.toString(),
+                                  hintStyle: widget.excercise.reps![currentSet].peso.toString() != '0'
+                                      ? const TextStyle(color: CustomColor.fontBlack)
+                                      : const TextStyle(color: Colors.grey),
                                   focusedBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Colors.orange,
@@ -125,6 +128,9 @@ class _ExcerciseItemState extends State<ExcerciseItem> {
                               decoration: InputDecoration(
                                 filled: true,
                                 hintText: widget.excercise.reps![currentSet].peso.toString(),
+                                hintStyle: widget.excercise.reps![currentSet].peso.toString() != '0'
+                                    ? const TextStyle(color: CustomColor.fontBlack)
+                                    : const TextStyle(color: Colors.grey),
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Colors.orange,

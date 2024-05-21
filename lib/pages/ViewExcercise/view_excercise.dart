@@ -29,7 +29,6 @@ class _ViewExcerciseState extends State<ViewExcercise> {
   var logger = Logger();
   @override
   void initState() {
-    // TODO: implement initState
     context.read<ExcerciseCubit>().getExcercises(ExcerciseModel(
           idSchedule: context.read<FilterExcerciseCubit>().state.id_schedule,
           idDay: context.read<FilterExcerciseCubit>().state.selectedDays,

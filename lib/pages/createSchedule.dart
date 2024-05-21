@@ -23,7 +23,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
 
   String? _name;
   String? _dieta;
-  final List<String> _tipoDieta = ['ipercalorica', 'normocalorica', 'ipocalorica'];
+  final List<String> _tipoDieta = ['hypercaloric', 'normocaloric', 'low-calorie'];
   final List<String> __daysForWeekItem = ['1', '2', '3', '4', '5', '6', '7'];
   String? _daysForWeek;
   int? _weeksLenght;
@@ -91,12 +91,12 @@ class _CreateScheduleState extends State<CreateSchedule> {
       decoration: const InputDecoration(
         border: InputBorder.none,
         icon: Icon(Icons.calendar_today, color: CustomColor.orangePrimary), //icon of text field
-        labelText: "Data inizio", //label text of field
+        labelText: "Start date", //label text of field
         labelStyle: TextStyle(color: Colors.grey),
       ),
       validator: (String? value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Data inizio richiesta';
+          return 'Start date mandatory';
         }
 
         return null;
@@ -141,13 +141,13 @@ class _CreateScheduleState extends State<CreateSchedule> {
       decoration: const InputDecoration(
         border: InputBorder.none,
         icon: Icon(Icons.calendar_today, color: CustomColor.orangePrimary), //icon of text field
-        labelText: "Data fine", //label text of field
+        labelText: "End date", //label text of field
         labelStyle: TextStyle(color: Colors.grey),
       ),
       readOnly: true, // when true user cannot edit text
       validator: (String? value) {
         if (value == null || value.trim().isEmpty) {
-          return 'Data fine richiesta';
+          return 'End date mandatory';
         }
         return null;
       },
@@ -245,7 +245,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
                   const Flexible(
                     flex: 2,
                     child: Text(
-                      'Dieta: ',
+                      'Diet: ',
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -261,7 +261,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
                       value: _dieta,
                       validator: (String? value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Seleziona il tipo di dieta';
+                          return 'Please choose a diet';
                         }
                         return null;
                       },
@@ -353,7 +353,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
               ),
               ElevatedButton(
                 onPressed: _submit,
-                child: Text('Salva'),
+                child: Text('Save'),
                 style:
                     ElevatedButton.styleFrom(backgroundColor: CustomColor.orangePrimary, foregroundColor: CustomColor.fontBlack),
               )
